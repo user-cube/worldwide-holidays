@@ -25,9 +25,7 @@ export class WorldHolidayService {
     year: number,
     query: Record<string, any>,
   ): Promise<Record<string, any>> {
-    console.log(typeof query);
     const keys = Object.keys(query);
-    console.log(Object.keys(query));
     if (keys.includes('stateName')) {
       if (keys.includes('regionName')) {
         this.holidays = new Holidays(
