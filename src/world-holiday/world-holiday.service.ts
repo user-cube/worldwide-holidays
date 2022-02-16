@@ -23,15 +23,16 @@ export class WorldHolidayService {
     return this._responseFormatter(this.holidays.getCountries());
   }
 
-  public async getStates(stateName: string): Promise<Record<string, any>> {
-    return this._responseFormatter(this.holidays.getStates(stateName));
+  public async getStates(countryName: string): Promise<Record<string, any>> {
+    return this._responseFormatter(this.holidays.getStates(countryName));
   }
 
   public async getRegions(
-    stateName: string,
-    regionName: string
+    countryName: string,
+    stateName: string
   ): Promise<Record<string, any>> {
-    return this._responseFormatter(this.holidays.getRegions(stateName, regionName));
+    console.log(this.holidays.getRegions(countryName, stateName))
+    return this._responseFormatter(this.holidays.getRegions(countryName, stateName));
   }
 
   public async getCountryHolidays(
