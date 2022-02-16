@@ -12,6 +12,7 @@ async function bootstrap() {
 
   logger.verbose(
     `Application listening on port => ${configService.get('port')}`,
+    "Main"
   );
   await app.listen(configService.get('port'));
 }

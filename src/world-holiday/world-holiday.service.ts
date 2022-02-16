@@ -1,37 +1,51 @@
-import { Injectable } from '@nestjs/common';
-const Holidays = require('date-holidays');
+import { Injectable } from "@nestjs/common";
+
+const Holidays = require("date-holidays");
 
 @Injectable()
 export class WorldHolidayService {
   private holidays = new Holidays();
 
+  private _responseFormatter = (response: Record<string, any>): Record<string, any> => {
+    if (typeof response === "undefined" || typeof response === null || Object.keys(response).length === 0) {
+      return {
+        status: 204,
+        msg: "No content for the given request."
+      };
+    }
+    return {
+      status: 200,
+      msg: response
+    };
+  };
+
   public async getCountries(): Promise<Record<string, any>> {
-    return this.holidays.getCountries();
+    return this._responseFormatter(this.holidays.getCountries());
   }
 
   public async getStates(stateName: string): Promise<Record<string, any>> {
-    return this.holidays.getStates(stateName);
+    return this._responseFormatter(this.holidays.getStates(stateName));
   }
 
   public async getRegions(
     stateName: string,
-    regionName: string,
+    regionName: string
   ): Promise<Record<string, any>> {
-    return this.holidays.getRegions(stateName, regionName);
+    return this._responseFormatter(this.holidays.getRegions(stateName, regionName));
   }
 
   public async getCountryHolidays(
     countryName: string,
     year: number,
-    query: Record<string, any>,
+    query: Record<string, any>
   ): Promise<Record<string, any>> {
     const keys = Object.keys(query);
-    if (keys.includes('stateName')) {
-      if (keys.includes('regionName')) {
+    if (keys.includes("stateName")) {
+      if (keys.includes("regionName")) {
         this.holidays = new Holidays(
           countryName,
           query.stateName,
-          query.regionName,
+          query.regionName
         );
       } else {
         this.holidays = new Holidays(countryName, query.stateName);
@@ -40,6 +54,6 @@ export class WorldHolidayService {
       this.holidays = new Holidays(countryName);
     }
 
-    return this.holidays.getHolidays(year);
+    return this._responseFormatter(this.holidays.getHolidays(year));
   }
 }
