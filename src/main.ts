@@ -2,7 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { LoggerService } from './logger/logger.service';
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,7 +21,7 @@ async function bootstrap() {
 
   logger.verbose(
     `Application listening on port => ${configService.get('port')}`,
-    "Main"
+    'Main',
   );
   await app.listen(configService.get('port'));
 }
